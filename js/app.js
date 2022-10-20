@@ -1,7 +1,6 @@
 const gamearea = document.querySelector(".gamearea");
-
 let bombAmount = 20;
-let size = 20;
+let size = 10;
 let squares = [];
 let gameOver = false;
 
@@ -16,14 +15,29 @@ function createBoard() {
 
 
     for(let i = 0; i < size * size; i++) {
-        const square = document.createElement("div");
+        square = document.createElement("div");
+        square.innerHTML = i;
         square.setAttribute("id", i);
+        square.classList.add(shuffledArray[i]);
         gamearea.appendChild(square);
         squares.push(square);
-        console.log("test");
+        square.addEventListener("click", function(e) {
+            console.log("clicked");
+        }); 
+        
     }
 
-    square.addEventListener('click', function(e) {
+    
+
+ 
+
+
+
+
+
+
+
+    /* square.addEventListener('click', function(e) {
          let currentId = square.id;
          if(isGameOver) return;
          if(square.classList.contains('checked') || square.classList.contains('flagged')) return;
@@ -39,7 +53,7 @@ function createBoard() {
             square.innerHTML = total;
             return
          }
-    })
+    }) */
 
 }
 
