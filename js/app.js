@@ -4,6 +4,7 @@ let size = 10;
 let squares = [];
 let gameOver = false;
 
+
 function createBoard() {
     
     const bombsArray = Array(bombAmount).fill('bomb');
@@ -11,51 +12,242 @@ function createBoard() {
     const gameArray = emptyArray.concat(bombsArray);
     const shuffledArray = gameArray.sort(() => Math.random() -0.5)
 
-    console.log("shuffled array", shuffledArray);
-
 
     for(let i = 0; i < size * size; i++) {
         square = document.createElement("div");
-        square.innerHTML = i;
-        square.setAttribute("id", i);
+        square.setAttribute("data", i);
         square.classList.add(shuffledArray[i]);
         gamearea.appendChild(square);
+        
+        square.addEventListener("click", handleClick); 
         squares.push(square);
-        square.addEventListener("click", function(e) {
-            console.log("clicked");
-        }); 
         
     }
-
+}
     
+    function handleClick(e) {
+        let current = e.target;
+        if(current.classList.contains("bomb"))
+        gameOver = true;
+        else {
+            e.target.classList.add("checked");
+            let currentId = Number(current.getAttribute("data"));
+            
+            let isLeft = currentId%size === 0 ? true : false;
+            let isTop = currentId < size ? true : false;
+            let isBottom = currentId >= ((size * size) - size);
+            let isRight = currentId % size === 9 ? true : false;
+            
 
+            if(isLeft && isTop) {
+                let total = 0;
+                console.log("currentId", currentId)
+                let pos1 = currentId + 1;
+                let pos2 = currentId + size;
+                let pos3 = currentId + size + 1;
+                if(squares[pos1].classList.contains("bomb"))
+                total++;
+                if(squares[pos2].classList.contains("bomb"))
+                total++;
+                if(squares[pos3].classList.contains("bomb"))
+                total++;
+                current.innerHTML = total;
+
+            }
+            else if(isLeft && !isTop && !isBottom) {
+                let total = 0;
+
+                console.log("currentId", currentId)
+                let pos1 = currentId - size;
+                let pos2 = currentId - size + 1;
+                let pos3 = currentId + 1;
+                let pos4 = currentId + size;
+                let pos5 = currentId + size + 1;
+                console.log("isLEft")
+                console.log("isbottom", isBottom)
+                if(squares[pos1].classList.contains("bomb"))
+                total++;
+                if(squares[pos2].classList.contains("bomb"))
+                total++;
+                if(squares[pos3].classList.contains("bomb"))
+                total++;
+                if(squares[pos4].classList.contains("bomb"))
+                total++;
+                if(squares[pos5].classList.contains("bomb"))
+                total++;
+                console.log("total", total)
+                current.innerHTML = total;
+
+            }
+            else if(isLeft && isBottom) {
+                let total = 0;
+
+                console.log("currentId", currentId)
+                let pos1 = currentId + 1;
+                let pos2 = currentId - size;
+                let pos3 = currentId - size + 1;
+                if(squares[pos1].classList.contains("bomb"))
+                total++;
+                if(squares[pos2].classList.contains("bomb"))
+                total++;
+                if(squares[pos3].classList.contains("bomb"))
+                total++;
+                console.log("total", total)
+                current.innerHTML = total;
+
+
+            }
+            else if(isRight && isTop) {
+                let total = 0;
+
+                console.log("currentId", currentId)
+                let pos1 = currentId - 1;
+                let pos2 = currentId + size;
+                let pos3 = currentId + size - 1;
+                if(squares[pos1].classList.contains("bomb"))
+                total++;
+                if(squares[pos2].classList.contains("bomb"))
+                total++;
+                if(squares[pos3].classList.contains("bomb"))
+                total++;
+                console.log("total", total)
+                current.innerHTML = total;
+
+
+            }
+            else if(isRight && !isTop && !isBottom) {
+                let total = 0;
+
+                console.log("currentId", currentId)
+                let pos1 = currentId - size;
+                let pos2 = currentId - size - 1;
+                let pos3 = currentId - 1;
+                let pos4 = currentId + size;
+                let pos5 = currentId + size - 1;
+                console.log("isLEft")
+                console.log("isbottom", isBottom)
+                if(squares[pos1].classList.contains("bomb"))
+                total++;
+                if(squares[pos2].classList.contains("bomb"))
+                total++;
+                if(squares[pos3].classList.contains("bomb"))
+                total++;
+                if(squares[pos4].classList.contains("bomb"))
+                total++;
+                if(squares[pos5].classList.contains("bomb"))
+                total++;
+                console.log("total", total)
+                current.innerHTML = total;
+
+            }
+            else if(isRight && isBottom) {
+                let total = 0;
+
+                console.log("currentId", currentId)
+                let pos1 = currentId - 1;
+                let pos2 = currentId - size;
+                let pos3 = currentId - size - 1;
+                if(squares[pos1].classList.contains("bomb"))
+                total++;
+                if(squares[pos2].classList.contains("bomb"))
+                total++;
+                if(squares[pos3].classList.contains("bomb"))
+                total++;
+                console.log("total", total)
+                current.innerHTML = total;
+
+
+            }
+
+            else if(isTop && !isLeft && !isRight) {
+                let total = 0;
+
+                console.log("currentId", currentId)
+                let pos1 = currentId - 1;
+                let pos2 = currentId + 1;
+                let pos3 = currentId + size;
+                let pos4 = currentId + size - 1;
+                let pos5 = currentId + size + 1;
+                console.log("isLEft")
+                console.log("isbottom", isBottom)
+                if(squares[pos1].classList.contains("bomb"))
+                total++;
+                if(squares[pos2].classList.contains("bomb"))
+                total++;
+                if(squares[pos3].classList.contains("bomb"))
+                total++;
+                if(squares[pos4].classList.contains("bomb"))
+                total++;
+                if(squares[pos5].classList.contains("bomb"))
+                total++;
+                console.log("total", total)
+                current.innerHTML = total;
+
+            }
+
+            else if(isBottom && !isLeft && !isRight) {
+                console.log("currentId", currentId)
+                let pos1 = currentId - 1;
+                let pos2 = currentId + 1;
+                let pos3 = currentId - size;
+                let pos4 = currentId - size - 1;
+                let pos5 = currentId - size + 1;
+                console.log("isLEft")
+                console.log("isbottom", isBottom)
+                if(squares[pos1].classList.contains("bomb"))
+                total++;
+                if(squares[pos2].classList.contains("bomb"))
+                total++;
+                if(squares[pos3].classList.contains("bomb"))
+                total++;
+                if(squares[pos4].classList.contains("bomb"))
+                total++;
+                if(squares[pos5].classList.contains("bomb"))
+                total++;
+                console.log("total", total)
+                current.innerHTML = total;
+
+            }
+            else {
+                console.log("currentId", currentId)
+                let total = 0;
+                let pos1 = currentId - 1;
+                let pos2 = currentId + 1;
+                let pos3 = currentId - size;
+                let pos4 = currentId - size - 1;
+                let pos5 = currentId - size + 1;
+                let pos6 = currentId + size;
+                let pos7 = currentId + size - 1;
+                let pos8 = currentId + size + 1;
+                console.log("isLEft")
+                console.log("isbottom", isBottom)
+                if(squares[pos1].classList.contains("bomb"))
+                total++;
+                if(squares[pos2].classList.contains("bomb"))
+                total++;
+                if(squares[pos3].classList.contains("bomb"))
+                total++;
+                if(squares[pos4].classList.contains("bomb"))
+                total++;
+                if(squares[pos5].classList.contains("bomb"))
+                total++;
+                if(squares[pos6].classList.contains("bomb"))
+                total++;
+                if(squares[pos7].classList.contains("bomb"))
+                total++;
+                if(squares[pos8].classList.contains("bomb"))
+                total++;
+                console.log("total", total)
+                current.innerHTML = total;
+            }
+
+        }
+
+
+    } 
  
 
 
 
 
-
-
-
-    /* square.addEventListener('click', function(e) {
-         let currentId = square.id;
-         if(isGameOver) return;
-         if(square.classList.contains('checked') || square.classList.contains('flagged')) return;
-         if((square.classList.contains('bomb'))) {
-            gameOver(square);
-         } else {
-             let total = square.getAttribute('data');
-             square.classList.add('checked')
-             if(total === 1) square.classList.add('one');
-             if(total === 2) square.classList.add('two');
-             if(total === 3) square.classList.add('three');
-             if(total === 4) square.classList.add('four');
-            square.innerHTML = total;
-            return
-         }
-    }) */
-
-}
-
 createBoard();
-console.log(squares);
